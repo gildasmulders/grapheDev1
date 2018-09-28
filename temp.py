@@ -33,12 +33,17 @@ def are_iso(A,B):
     htemp = [0] * len(A)
     
     for E2 in B do:
+        htemp = [0] * len(A)
         for I1 in range(len(A)) do:
             for I2 in range(len(E2)) do:
                 if A[1][I1]==E2(I2):
                     htemp(I1) = I2
+                    I2 = range(len(E2))+1
                     
-                    
+        if I1 == range(len(A)) && htemp[I1]!= 0 :
+            if (check_mapping(A,B,htemp)):
+                return True,htemp
+            
                 
                         
                         
