@@ -14,8 +14,8 @@ def check_mapping(A, B, h):
         - h an array describing an isomorphism mapping node i from A to node h[i] from B  
     Return True if h(A) = B, False otherwise
     """
-    for E1 in range(len(A)) do:
-            for I1 in range(len(A)) do:
+    for E1 in range(len(A)):
+            for I1 in range(len(A)):
                     if A[E1][I1] != B[h[E1]][h[I1]]:
                         return False
                         
@@ -30,22 +30,21 @@ def are_iso(A,B):
         - Ans = True if A and B are isomorphs, False otherwise
         - h an array describing an isomorphim such that h(A) = B
     """
-    htemp = [0] * len(A)
-    
-    for E2 in B do:
-        for I1 in range(len(A)) do:
-            for I2 in range(len(E2)) do:
-                if A[1][I1]==E2(I2):
-                    htemp(I1) = I2
-                    
-                    
-                
-                        
-                        
-                        
-            
-
-    return False, []
+    n = len(A)
+    htemp = [0] * n
+    OutOfE1 = list(range(n))
+    for E1 in range(n):
+        for E2 in OutOfE1:
+            tempList = tuple(itertools.permutations(B[E2],n))
+            if tuple(A[E1]) in tempList:
+                OutOfE1.remove(E2)
+                htemp[E1] = E2   
+                break
+    flag = check_mapping(A, B, htemp)
+    print(htemp)
+    if not flag:
+        return flag, []    
+    return flag, htemp
 
 def color_ones(A):
     """
@@ -57,7 +56,7 @@ def color_ones(A):
     
     n = len(A)
     T = [1]*n
-    for i in range(n) do:
+    for i in range(n):
         T[i] = [1]*n
         
     
@@ -72,9 +71,9 @@ def color_degree(A):
     """
     n = len(A)
     D = [0]*n
-    for i in range(n) do:
+    for i in range(n):
         sum = 0
-        for j in A[i] do:
+        for j in A[i]:
             sum += j            
         D[i] = sum       
    
@@ -128,8 +127,8 @@ if __name__ == "__main__":
             B.append([int(x) for x in lines[j]])  
             
     # Compute answer
-     
-    are_iso, h = are_iso_with_colors(A, B, color_ones)
+    are_iso, h = are_iso(A, B)
+    #are_iso, h = are_iso_with_colors(A, B, color_ones)
     #are_iso, h = are_iso_with_colors(A, B, color_degree)
     #are_iso, h = are_iso_with_colors(A, B, lambda x : color_k_neigh(x, 2))
      
