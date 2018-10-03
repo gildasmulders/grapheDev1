@@ -30,6 +30,7 @@ def are_iso(A,B):
         - Ans = True if A and B are isomorphs, False otherwise
         - h an array describing an isomorphim such that h(A) = B
     """
+
     n = len(A)
     htemp = [0] * n
     OutOfE1 = list(range(n))
@@ -45,6 +46,7 @@ def are_iso(A,B):
     if not flag:
         return flag, []    
     return flag, htemp
+
 
 def color_ones(A):
     """
