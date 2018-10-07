@@ -79,10 +79,21 @@ def color_k_neigh(A, k):
     Return an array containing the colors as defined in Q4 of the project statement
     The colors have to be structured as a sorted tuple of pairs (k, deg(v)) 
     """
-
-    def matr_product(A, B)
+    
+    def matr_product(A, B):
+    
+        n = len(A)
+        
+        C = [0]*n
+        for m in range(n):
+            C[m] = [0]*n
             
-    return []
+            for i in range(n):
+                for j in range(n):
+                    for k in range(n):
+                        C[i][j] += A[i][k]*B[k][j]
+        
+        return C
      
 
 def are_iso_with_colors(A, B, color = color_ones):

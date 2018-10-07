@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Oct  7 16:07:19 2018
+
+@author: minh-phuong
+"""
+
+def matr_product(A, B):
+        
+    n = len(A)
+    
+    C = [0]*n
+    for m in range(n):
+        C[m] = [0]*n
+        
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                C[i][j] += A[i][k]*B[k][j]
+        
+    return C
+
+if __name__ == "__main__":
+    
+    A = [[1, 2],[3, 4]]
+    B = [[5, 2],[3, 1]]
+
+    print(matr_product(A,B))
