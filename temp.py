@@ -31,21 +31,13 @@ def are_iso(A,B):
         - h an array describing an isomorphim such that h(A) = B
     """
 
-    n = len(A)
-    htemp = [0] * n
-    OutOfE1 = list(range(n))
-    for E1 in range(n):
-        for E2 in OutOfE1:
-            tempList = tuple(itertools.permutations(B[E2],n))
-            if tuple(A[E1]) in tempList:
-                OutOfE1.remove(E2)
-                htemp[E1] = E2   
-                break
-    flag = check_mapping(A, B, htemp)
-    print(htemp)
-    if not flag:
-        return flag, []    
-    return flag, htemp
+    n = len(A)    
+    h = list(range(n))
+    for E1 in list(itertools.permutations(h,n)):
+        flag = check_mapping(A, B, list(E1))
+        if flag:
+            return flag, list(E1)          
+    return flag, []
 
 
 def color_ones(A):
@@ -57,10 +49,7 @@ def color_ones(A):
     """
     
     n = len(A)
-    T = [1]*n
-    for i in range(n):
-        T[i] = [1]*n
-        
+    T = [1]*n        
     
     return T
 
@@ -91,7 +80,7 @@ def color_k_neigh(A, k):
     The colors have to be structured as a sorted tuple of pairs (k, deg(v)) 
     """
 
-    # TO COMPLETE
+    def matr_product(A, B)
             
     return []
      
