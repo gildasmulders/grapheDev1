@@ -95,6 +95,7 @@ def color_k_neigh(A, k):
         
         return C
      
+    return []
 
 def are_iso_with_colors(A, B, color = color_ones):
     """
@@ -106,10 +107,44 @@ def are_iso_with_colors(A, B, color = color_ones):
         - h describe an isomorphim such that h(A) = B if Ans = True, h = [] otherwise
     
     """
+    n = len(A)
+    colorsA = color(A)
+    colorsB = color(B)
+    h = [-1]*n
+    
+    sameColor = []
+        
+    for E2 in range(n):
+        for E3 in range(n):
+            if(colorsA[E2] == colorsB[E3]) :
+                sameColor.append(tuple([E2, E3]))
+    
+    
+    def iso_with_colors( h):
+        
+        n = len(A)
+        
+        if -1 not in h :
+            
+            if check_mapping(A, B, h) == True :
+                return True, h
 
-    # TO COMPLETE
+        
+        for E4 in sameColor:
+            if (h[E4[0]] == -1) and (E4[1] not in h):
+                h[E4[0]] = E4[1]
+                result, temp = iso_with_colors(h)
+                if result == True:
+                    
+                    return True, temp
+                else:
+                    h[E4[0]] = -1
+                    
+        return False, []
 
-    return False, []
+    iso, hfinal = iso_with_colors(h)
+        
+    return iso, hfinal
 
 if __name__ == "__main__":
 
@@ -129,8 +164,8 @@ if __name__ == "__main__":
             B.append([int(x) for x in lines[j]])  
             
     # Compute answer
-    are_iso, h = are_iso(A, B)
-    #are_iso, h = are_iso_with_colors(A, B, color_ones)
+    #are_iso, h = are_iso(A, B)
+    are_iso, h = are_iso_with_colors(A, B, color_ones)
     #are_iso, h = are_iso_with_colors(A, B, color_degree)
     #are_iso, h = are_iso_with_colors(A, B, lambda x : color_k_neigh(x, 2))
      
