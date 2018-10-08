@@ -85,17 +85,46 @@ def color_k_neigh(A, k):
         n = len(A)
         
         C = [0]*n
-        for m in range(n):
-            C[m] = [0]*n
-            
-            for i in range(n):
-                for j in range(n):
-                    for k in range(n):
-                        C[i][j] += A[i][k]*B[k][j]
-        
+        for l in range(n):
+            C[l] = [0] * n
+        for i in range(n):
+            for j in range(n):
+                for k in range(n):
+                    C[i][j] += A[i][k]*B[k][j]        
         return C
+    n = len(A)
+    toRet = [0]*n
+    NodeSeenAlready = [0] * n
+    D = color_degree(A)
+    for o in range(n):
+        NodeSeenAlready[o] = [o]
+        toRet[o] = [(0, D[o])]        
+        
+    for i in range(k): 
+        if i == 0:
+            for j in range(n):
+                for m in range(n):
+                    if A[j][m] > 0:
+                        if m not in NodeSeenAlready[j]:
+                            NodeSeenAlready[j].append(m)
+                        toRet[j].append((i+1, D[m]))
+                    elif m in NodeSeenAlready[j]:
+                        toRet[j].append((i+1, D[m]))
+        else:
+            C = matr_product(A, A)
+            for j in range(n):
+                for m in range(n):
+                    if C[j][m] > 0:
+                        if m not in NodeSeenAlready[j]:
+                            NodeSeenAlready[j].append(m)
+                        toRet[j].append((i+1, D[m]))
+                    elif m in NodeSeenAlready[j]:
+                        toRet[j].append((i+1, D[m]))
+            A = C
+    for l in range(n):
+        toRet[l] = tuple(sorted(toRet[l]))
      
-    return []
+    return toRet
 
 def are_iso_with_colors(A, B, color = color_ones):
     """
