@@ -137,8 +137,13 @@ def are_iso_with_colors(A, B, color = color_ones):
     
     """
     n = len(A)
-    colorsA = color(A)
-    colorsB = color(B)
+    if color == color_k_neigh:
+        colorsA = color(A, len(A))
+        colorsB = color(B, len(B))
+    else:
+        colorsA = color(A)
+        colorsB = color(B)
+        
     h = [-1]*n
     
     sameColor = []
@@ -153,10 +158,15 @@ def are_iso_with_colors(A, B, color = color_ones):
         
         n = len(A)
         
+        for E1 in range(n):
+           for I1 in range(n):
+               if (h[E1] != -1)and (h[I1]!= -1) and (A[E1][I1] != B[h[E1]][h[I1]]):
+                   return False, []
+                  
+        
         if -1 not in h :
-            
-            if check_mapping(A, B, h) == True :
-                return True, h
+        
+            return True, h
 
         
         for E4 in sameColor:
@@ -194,9 +204,9 @@ if __name__ == "__main__":
             
     # Compute answer
     #are_iso, h = are_iso(A, B)
-    are_iso, h = are_iso_with_colors(A, B, color_ones)
+    #are_iso, h = are_iso_with_colors(A, B, color_ones)
     #are_iso, h = are_iso_with_colors(A, B, color_degree)
-    #are_iso, h = are_iso_with_colors(A, B, lambda x : color_k_neigh(x, 2))
+    are_iso, h = are_iso_with_colors(A, B, lambda x : color_k_neigh(x, 2))
      
     # Check results
 
