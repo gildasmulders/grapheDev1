@@ -82,7 +82,19 @@ def shortest_path_2(tasks, paths):
         See project statement for more details
     """
 
-    return -1
+    n = len[tasks]
+    tab = [-1]* n*n
+    for i in range(n):
+        tab[i*n+i] = tasks[i]
+    for E in paths:
+        tab[E[0]*n+E[1]] = E[2]
+        tab[E[1]*n+E[0]] = E[2]
+        
+    time = tasks[0]
+    end = n - 1
+    
+    
+    return time
 
 
 if __name__ == "__main__":
