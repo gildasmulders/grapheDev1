@@ -21,35 +21,47 @@ def shortest_path_1(maze):
         
         See project statement for more details
     """
-    for i in range(len(maze)):
-        for j in range(len(maze[0])) :
-            if maze[i][j] == 'E':
-              coordE = (i,j, 0)
-                
-    visited = []
+    n = len(maze)
+    m = len(maze[0])
+    def find_E(maze):
+        for i in range(n):
+            for j in range(m) :
+                if maze[i][j] == 'E':
+                  return (i,j)
+        return -1       
+              
+    coordE = find_E(maze)
+    if(coordE == -1):
+        return -1
+            
+    visited = [-1]*n*m
     nodesToVisit = Q.Queue()
     nodesToVisit.put(coordE)
+    visited[coordE[0]*m +coordE[1]] = 0
 
-    foundS = 0
-    while (not nodesToVisit.empty() and not foundS):
+    while (not nodesToVisit.empty()):
 
       current = nodesToVisit.get()
       x = current[0]
       y = current[1]
-      d = current[2] + 1
       
-      for i in range(-1, 2,2):
+      for i in [-1, 1]:
         
-        if((maze[x+i][y] != '#') and ((x+i, y) not in visited)) : 
-          nodesToVisit.put((x+i,y,d))
-          
-        if((maze[x][y+i] != '#') and ((x, y+i) not in visited)) : 
-          nodesToVisit.put((x,y+i,d)) 
-
         if((maze[x+i][y]=='S')or (maze[x][y+i] == 'S')):
-          return d
+          return visited[x*m+y] +1
+      
+        if((maze[x+i][y] != '#') and (visited[(x+i)*m+y] == -1)) : 
+            visited[(x+i)*m+y] = visited[x*m+y] +1 
 
-      visited.append((x,y))
+            nodesToVisit.put((x+i,y))
+          
+        if((maze[x][y+i] != '#') and (visited[x*m+(y+i)] == -1)) : 
+            visited[x*m+(y+i)] = visited[x*m+y] +1 
+
+            nodesToVisit.put((x,y+i)) 
+
+        
+
 
 
         
