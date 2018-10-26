@@ -22,7 +22,7 @@ def shortest_path_1(maze):
         See project statement for more details
     """
     for i in range(len(maze)):
-        for j in range(len(maze[0]))
+        for j in range(len(maze[0])) :
             if maze[i][j] == 'E':
               coordE = (i,j, 0)
                 
@@ -31,7 +31,7 @@ def shortest_path_1(maze):
     nodesToVisit.put(coordE)
 
     foundS = 0
-    while (!nodesToVisit.empty()&&!foundS):
+    while (not nodesToVisit.empty() and not foundS):
 
       current = nodesToVisit.get()
       x = current[0]
@@ -49,7 +49,7 @@ def shortest_path_1(maze):
         if((maze[x+i][y]=='S')or (maze[x][y+i] == 'S')):
           return d
 
-      visited.add((x,y))
+      visited.append((x,y))
 
 
         
