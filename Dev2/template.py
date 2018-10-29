@@ -80,21 +80,65 @@ def shortest_path_2(tasks, paths):
         - return the time you need to finish the game
           
         See project statement for more details
-    """
-
-    n = len[tasks]
-    tab = [-1]* n*n
-    for i in range(n):
-        tab[i*n+i] = tasks[i]
-    for E in paths:
-        tab[E[0]*n+E[1]] = E[2]
-        tab[E[1]*n+E[0]] = E[2]
         
-    time = tasks[0]
-    end = n - 1
+        Minh-Phuong Tran and Gildas Mulders, with the help of Gilles Peiffer
+    """
     
+    def Minh(Vector, start, length):
+        index=-1
+        valeur=999999
+        for i in range(start, start + length):
+            if(Vector[i]>-1):
+                if(valeur>Vector[i]):
+                    valeur=Vector[i]
+                    index=i%length
+        return index
     
-    return time
+    n = len(tasks)
+    tab = [-1]* n*n
+    modTab = [0]* n*n
+    MeilleurChemin = [0] *n
+    for E in paths:
+        tab[(E[0]-1)*n+E[1]-1] = E[2] + tasks[E[1]-1]
+        tab[(E[1]-1)*n+E[0]-1] = E[2] + tasks[E[0]-1]
+    for i in range(n):
+        modTab[i] = tab[i]  
+    modTab[0] = -2
+    
+    current=Minh(modTab, 0, n)
+    Time=modTab[current]
+    MeilleurChemin[0]=0
+    MeilleurChemin[current]=Time
+    modTab[current]=-2
+    
+    for m in range(1,n):
+        
+        for o in range(n):
+            
+            if(modTab[(m-1) * n + o]==-2):
+                modTab[m * n + o]=-2
+            elif(modTab[(m-1) * n + o]==-1):
+                if(tab[current * n + o]!=-1):
+                    modTab[m * n + o]=Time + tab[current * n + o]
+                else:
+                    modTab[m * n + o]=-1
+            else:
+                if(tab[current * n + o]!=-1):
+                    modTab[m * n + o]= min(Time + tab[current * n + o],modTab[(m-1) * n + o])
+                else:
+                    modTab[m * n + o]=modTab[(m-1) * n + o]
+                    
+        current=Minh(modTab, m*n, n)
+        if(current==-1):
+            break
+        Time=modTab[m * n + current]
+        MeilleurChemin[current ]=Time
+        modTab[m * n + current]=-2
+        if(current==n-1):
+            break
+        
+    return MeilleurChemin[n-1]+tasks[0]
+  
 
 
 if __name__ == "__main__":
